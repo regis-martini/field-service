@@ -1,8 +1,10 @@
 package com.field.statistics.fieldservice.services;
 
 import com.field.statistics.fieldservice.controllers.dto.StatisticsDto;
+import com.field.statistics.fieldservice.entities.ConditionHistory;
 import com.field.statistics.fieldservice.model.Condition;
 import com.field.statistics.fieldservice.model.Statistics;
+import com.field.statistics.fieldservice.repositories.ConditionHistoryRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +20,8 @@ public class StatisticsService {
 
     //Bucket of statistics per day
     private Map<LocalDate, Statistics> statisticBuckets = new ConcurrentHashMap<>();
+    @Autowired
+    private ConditionHistoryRepository repository;
 
     /**
      * Adding to statistics bucket vegetation amount
@@ -37,6 +42,7 @@ public class StatisticsService {
             statistics.addData(condition.getVegetation());
         }
         statisticBuckets.put(date, statistics);
+        repository.save(new ConditionHistory(condition.getVegetation(), condition.getOccurrenceAt()));
     }
 
     /**
