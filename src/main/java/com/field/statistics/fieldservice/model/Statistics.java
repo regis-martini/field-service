@@ -6,8 +6,8 @@ import lombok.Data;
 public class Statistics {
 
     private double sum = 0.0;
-    private double maximum = 0.0;
-    private double minimum = 0.0;
+    private double maximum = Double.MIN_VALUE;
+    private double minimum = Double.MAX_VALUE;
     private int count = 0;
 
     public void addData(double amount) {
@@ -16,7 +16,8 @@ public class Statistics {
 
         if (amount > maximum) {
             maximum = amount;
-        } else if (amount < minimum) {
+        }
+        if (amount < minimum) {
             minimum = amount;
         }
     }

@@ -42,7 +42,7 @@ public class StatisticsService {
     /**
      * Retrieves statistics for the last 30 days
      *
-     * @return StatisticsDto
+     * @return statistics StatisticsDto
      */
     public StatisticsDto getStatistics() {
         LocalDate localDate = LocalDate.now();
@@ -52,9 +52,11 @@ public class StatisticsService {
 
         for (int i = 0; i < 30; i++) {
             Statistics stats = statisticBuckets.get(localDate);
-            minList.add(stats.getMinimum());
-            maxList.add(stats.getMaximum());
-            avgList.add(stats.calculateAverage());
+            if (stats != null) {
+                minList.add(stats.getMinimum());
+                maxList.add(stats.getMaximum());
+                avgList.add(stats.calculateAverage());
+            }
             localDate = localDate.minusDays(1);
         }
 
@@ -63,5 +65,12 @@ public class StatisticsService {
         double average = avgList.stream().mapToDouble(Double::valueOf).average().orElse(0.0);
 
         return new StatisticsDto(maximal, minimal, average);
+    }
+
+    /**
+     * Clear the caches,used to make tests execution consistent
+     */
+    public void clearStatistics() {
+        statisticBuckets.clear();
     }
 }
