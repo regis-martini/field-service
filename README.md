@@ -1,4 +1,4 @@
-Applciation to collect statistics from a field with complexity O(1)
+A simple rest application to collect and store statistics from a field with complexity O(1)
 
 # Documentation
 
