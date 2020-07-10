@@ -1,6 +1,8 @@
+Applciation to collect statistics from a field with complexity O(1)
+
 # Documentation
 
-Implemented the challenge using spring boot, jdk 8, lombok and h2 database
+Implemented the application using spring boot, jdk 8, lombok and h2 database.
 
 NOTE: This project might require annotation processing to be enabled on the IDE and lombok plugin
 
